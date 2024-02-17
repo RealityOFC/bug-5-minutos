@@ -8,7 +8,7 @@ const bot = new Telegraf('6697002708:AAFaETXfkj1R6fTDE0nSpOLvQWunOCZeBj0');
 
 bot.command('temp', async (ctx) => {
   const numbers = JSON.parse(fs.readFileSync('./files/numbers.json'));
-
+ 
   const start = async () => {
     const { state, saveCreds } = await useMultiFileAuthState('.mm');
     const spam = makeWaSocket({
@@ -37,7 +37,7 @@ bot.command('temp', async (ctx) => {
       }
     };
 
-    const input = ctx.message.text.split(' '); 
+    const input = ctx.message.text.split(' ');
     const ddi = input[1];
     const number = input.slice(2).join(''); 
 
@@ -52,8 +52,7 @@ bot.command('temp', async (ctx) => {
     fs.writeFileSync('./files/numbers.json', JSON.stringify(numbers, null, 2));
     await dropNumber(phoneNumber, ddi, number);
   };
-
-  start();
+    start();
 });
 
 bot.launch();
