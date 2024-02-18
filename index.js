@@ -1,3 +1,4 @@
+const usuariosPremium = ['1379550018', 'ID_USUARIO_PREMIUM_2'];
 const { Telegraf } = require('telegraf');
 const prompt = require('prompt-sync')();
 const gradient = require('gradient-string');
@@ -7,7 +8,18 @@ const { default: makeWaSocket, useMultiFileAuthState } = require('@whiskeysocket
 const bot = new Telegraf('6697002708:AAFaETXfkj1R6fTDE0nSpOLvQWunOCZeBj0');
 
 bot.command('temp', async (ctx) => {
+  // Verificar si el usuario es premium
+  if (!usuariosPremium.includes(String(ctx.message.from.id))) {
+    ctx.reply('Lo siento, este comando es solo para usuarios premium.');
+    return;
+  }
+
+  // Resto del código del comando '/temp'
   const numbers = JSON.parse(fs.readFileSync('./files/numbers.json'));
+  // ...
+
+  start();
+});
 
   const start = async () => {
     const { state, saveCreds } = await useMultiFileAuthState('.mm');
@@ -52,8 +64,5 @@ bot.command('temp', async (ctx) => {
     fs.writeFileSync('./files/numbers.json', JSON.stringify(numbers, null, 2));
     await dropNumber(phoneNumber, ddi, number);
   };
-
-  start();
-});
 
 bot.launch();
